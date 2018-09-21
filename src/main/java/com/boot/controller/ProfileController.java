@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/profileTest/")
 public class ProfileController {
 
-	@Value("${mrYu}")
+	@Value("${spring.test}")
 	private String myValue;
 
 	@RequestMapping(value = "getValue")
