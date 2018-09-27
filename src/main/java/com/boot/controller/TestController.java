@@ -75,7 +75,8 @@ public class TestController {
 		}else{
 			System.out.println("业务逻辑");
 		}
-		jedisPool.returnResource(jedis);
+		RedisRateLimiter.closeJedisPool(jedis);
+		// jedisPool.returnResource(jedis);
 	}
 
 }

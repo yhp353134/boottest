@@ -50,4 +50,18 @@ public class RedisRateLimiter {
 		return null;
 	}
 
+	public static void closeJedisPool(Jedis jedis) {
+		jedis.close();
+		if (jedis.isConnected()) {
+			try {
+				System.out.println("退出" + jedis.toString() + ":" + jedis.quit());
+				jedis.disconnect();
+			} catch (Exception e) {
+				System.out.println("退出失败");
+				e.printStackTrace();
+			}
+		}
+		jedis.close();
+	}
+
 }
