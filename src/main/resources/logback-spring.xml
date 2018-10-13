@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+  <!-- 使用Spring配置的变量 -->
+  <!-- 部署的环境类型：${spring.profiles.active}，默认dev -->
+  <springProperty scope="context" name="DEPLOY_ENV" source="spring.profiles.active" defaultValue="dev" />
+  
+  <!-- 日志基础路径，默认IDE下会输出到当前目录target/logs下，tomcat会输出到tomcat/logs目录下  -->
+  <!-- 如果一个tomcat下面部署多个项目，再加一级路径，比如tomcat/logs/app1，/logs/app2 -->
+  <springProperty scope="context" name="LOG_HOME" source="log.basepath" defaultValue="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${catalina.base:-./target}}}/logs/}" />
+
+  <!-- 主日志级别 -->
+  <springProperty scope="context" name="ROOT_LEVEL" source="log.root.level" defaultValue="DEBUG" />
+
+  <!-- APP 日志级别 -->
+  <springProperty scope="context" name="APP_LEVEL" source="log.app.level" defaultValue="INFO" />
+  
+  <!-- APP Package 前缀，对应java的package路径 -->
+  <springProperty scope="context" name="APP_PACKAGE" source="log.app.package" defaultValue="com.boot" />
+  
+  <!-- 日志基本输出格式 -->
+  <property name="LOG_COMMON_PATTERN" value="%d [%thread] [%level] %logger - %msg%n" />
+  <!-- 开发使用，通常为控制台输出 -->
+  <springProperty scope="context" name="LOG_DEV_PATTERN" source="log.pattern.dev" defaultValue="${CONSOLE_LOG_PATTERN:-%d [%thread] %-5level %logger{48}:%line - %msg%n}" />
+
+  <!-- 日志文件大小,超过这个大小将被压缩 -->
+  <springProperty scope="context" name="LOG_MAX_SIZE" source="log.maxsize" defaultValue="100MB" />
+
+  <!-- 引入标准appender配置 -->
+  <include resource="logback-appender.xml" />
+
+  <!-- 应用自己的一些appender和logger， -->
+  <!-- 根据需要自己添加 -->
+  <include resource="logback-app-special.xml"/>
+  
+  <!-- 设置app level和root level -->
+  <logger name="${APP_PACKAGE}" level="${APP_LEVEL}" />
+  <root level="${ROOT_LEVEL}">
+    <!-- Required: exception log -->
+    <appender-ref ref="FILE_EXCEPTION"/>
+    <!-- Required: app log  -->
+    <appender-ref ref="FILE_APP"/>
+    
+    <!-- Optional： show all debug or trace info -->
+    <!-- <appender-ref ref="FILE_DEBUG"/> -->
+    <!-- <appender-ref ref="FILE_TRACE"/> -->
+    
+    <springProfile name="dev">
+      <appender-ref ref="STDOUT" />
+    </springProfile>
+    
+  </root>
+
+</configuration>

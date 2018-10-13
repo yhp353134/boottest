@@ -18,7 +18,7 @@ public class ConcurrencyTest {
     private static final int threadTotal = 50;
     private static int count =0;
 
-    public static void main(String[] args) throws InterruptedException {
+    public  static void main(String[] args) throws InterruptedException {
         ExecutorService executorService = Executors.newCachedThreadPool();
         final Semaphore semaphore = new Semaphore(threadTotal);
         final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
