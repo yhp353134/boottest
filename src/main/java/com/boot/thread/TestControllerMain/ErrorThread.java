@@ -1,4 +1,4 @@
-package com.boot.common.thread.TestMain;
+package com.boot.thread.TestControllerMain;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

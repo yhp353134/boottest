@@ -1,8 +1,7 @@
-package com.boot.common.thread.TestMain;
+package com.boot.thread.TestControllerMain;
 
-import com.boot.common.thread.annoations.NoThreadSafe;
+import com.boot.thread.annoations.NoThreadSafe;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.Executor;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;

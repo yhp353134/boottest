@@ -1,4 +1,4 @@
-package com.boot.common.thread.annoations;
+package com.boot.thread.annoations;
 
 
 import java.lang.annotation.ElementType;
