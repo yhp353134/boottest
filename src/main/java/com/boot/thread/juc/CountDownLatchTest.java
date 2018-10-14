@@ -1,17 +1,8 @@
-package com.boot.thread.TestControllerMain;
+package com.boot.thread.juc;
 
-import com.boot.thread.annoations.NoThreadSafe;
-import lombok.extern.slf4j.Slf4j;
+import java.util.concurrent.*;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
-
-@Slf4j
-@NoThreadSafe
-public class ConcurrencyTest {
-
+public class CountDownLatchTest {
     // 请求总数
     private static final int clientTotal = 1000;
     // 同时间的请求数
@@ -20,25 +11,24 @@ public class ConcurrencyTest {
 
     public  static void main(String[] args) throws InterruptedException {
         ExecutorService executorService = Executors.newCachedThreadPool();
-        final Semaphore semaphore = new Semaphore(threadTotal);
         final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
         for (int i=0;i<clientTotal; i++) {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        semaphore.acquire();
                         count++;
-                        semaphore.release();
                     } catch (Exception e) {
 
+                    } finally {
+                        countDownLatch.countDown();
                     }
-                    countDownLatch.countDown();
                 }
             });
         }
         countDownLatch.await();
+        countDownLatch.await(10, TimeUnit.SECONDS);
         System.out.print(count);
-        executorService.shutdown();
+        executorService.shutdown(); // 当上面没有执行完 其实是不会关闭所有的线程的
     }
 }

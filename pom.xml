@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.boot</groupId>
-	<artifactId>boottest</artifactId>
+	<artifactId>Boot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>boottest</name>
-	<description>boottest</description>
+	<description>Boot</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -63,6 +63,11 @@
             <groupId>com.google.collections</groupId>
             <artifactId>google-collections</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.6</version>
         </dependency>
 
     </dependencies>
