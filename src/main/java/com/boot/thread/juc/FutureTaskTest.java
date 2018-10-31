@@ -22,6 +22,29 @@ public class FutureTaskTest {
         System.out.println("处理逻辑");
         String str = futureTask.get(); // 这里会阻塞
         System.out.println(str);
+
+
+
+
+        ExecutorService executorService = Executors.newCachedThreadPool();
+          Future future = executorService.submit(new Callable<Object>() {
+              @Override
+              public Object call() throws Exception {
+                  Long start = System.currentTimeMillis();
+                  while (true) {
+                      Long current = System.currentTimeMillis();
+                     if ((current - start) > 1000) {
+                         return 1;
+                     }
+                 }
+             }
+         });
+          try {
+             Integer result = (Integer)future.get();
+             System.out.println(result);
+         }catch (Exception e){
+             e.printStackTrace();
+         }
 */
         CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> "Hello")
                 .thenApply(String::toUpperCase)
