@@ -1,11 +1,16 @@
 package com.boot.thread.juc;
 
+import io.netty.util.concurrent.ThreadPerTaskExecutor;
+
 import java.util.concurrent.*;
 
 public class FutureTaskTest {
 
 
     private static ExecutorService executorService = Executors.newCachedThreadPool();
+
+    private static final boolean useCommonPool = (ForkJoinPool.getCommonPoolParallelism() > 1);
+   /* private static final Executor asyncPool = useCommonPool?ForkJoinPool.commonPool() : new ThreadPerTaskExecutor();*/
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
       /*
@@ -102,7 +107,11 @@ public class FutureTaskTest {
         System.out.println("执行完成后");*/
 
 
-
+//	public Future<Double> getPriceAsync(String product){
+//		CompletableFuture<Double> futurePrice = new CompletableFuture<>();
+//		new Thread(()->futurePrice.complete(getPrice(product))).start();
+//		return futurePrice;
+//	}
 
 
        // main 结束
